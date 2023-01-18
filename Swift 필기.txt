@@ -1,0 +1,186 @@
+import UIKit
+// ios IO 기본 라이브러리 포함
+
+var str = "Hello"
+var str: String = "Hello" 
+// var : 변수
+
+print(str)
+// 출력문 
+
+dump(str)
+// 출력문 (클래스의 경우 세부정보 모두 표시)
+
+print("안녕은 영어로 ",str)
+// 문자열 보간 출력
+
+
+* 자료형
+Int	: 정수형 (4Byte - 8Byte)
+UInt	: 정수형 (unsigned int)
+Float	: 실수형 (4Byte)
+Double	: 실수형 (8Byte)
+Bool	: 논리형 (1Byte)
+Character	: 문자형 (2Byte 유니코드)
+String	: 문자열 ()
+
+var multiLine = """
+여러줄의
+문자열
+하하하
+"""
+
+
+* 객체 타입
+Any		: 모든 데이터 타입을 담을 수 있음
+AnyObject	: 모든 클래스 타입을 담을 수 있음
+(nil = NULL)
+
+
+* 옵셔널 변수
+NULL 예외 처리
+var nullable: Int? = nil	: NULL일 수도 있는 변수
+1. Optional Binding
+if let temp = nullable 
+{
+	print(nullable!)
+}
+else
+{
+	print("null")
+}
+
+* 강제 언래핑
+nullable!
+// ! : 옵셔널 변수에서 실제 값을 빼오는 연산자
+
+* ?? 연산자
+print(name ?? "대체값")
+// 옵셔널 변수가 NULL이면 대체값을 전달, 아니면 그대로
+
+
+* 범위 연산자
+let range = 1...10
+let range = 1..<11
+for i in range
+{
+	print(i);
+} 
+// 1 2 3 4 5 6 7 8 9 10
+
+
+* 난수 발생
+let random: UInt32 = arc4random_uniform(100);
+// 0부터 100개의 값을 랜덤하게 발생
+
+
+* 형변환
+let int: Int = Int(random);
+
+
+* switch-case문
+switch random
+{
+	case 0...10:
+		print("10 이하");
+	case 11...50:
+		print("11 이상 50 이하");
+	default:
+		print("50 초과");
+}
+
+
+* 반복문
+for i in 0...10
+// 0 1 2 3 4 5 6 7 8 9 10
+
+for i in (0...10).reversed()
+// 10 9 8 7 6 5 4 3 2 1 0
+
+for i in stride(from: 0, to: 10, by 2)
+// 0 2 4 6 8 10
+
+var array = [4, 5, 6]
+for i in 0..<array.capacity	// 0 1 2
+for i in array		// 4 5 6
+
+
+* 레이블 구문
+OUTER: for i in 1...10
+{
+	for j in 1...10
+	{
+		if i > 3
+		{
+			break OUTER;
+		}
+	}
+}
+// 레이블을 지정하여 그 곳으로 한 번에 빠져나감
+
+
+* 값, 참조
+- 값 타입 : 기본 자료형 -> 구조체로 설계됨
+	, 구조체, 열거형, 딕셔너리, 배열 등
+- 참조 타입 : 클래스, NS류 자료형
+		(NSString, NSInt - Obj-C)
+
+
+* 함수
+- 반환값 있을 때, 화살표로 타입 작성
+func myFunc() ->Int
+{
+	return 10
+}
+let result = myFunc();
+
+- 매개변수 있을 때, 이름과 타입을 같이 넣어줌
+func getSize(name: String) -> Int
+{
+	return name.capacity;
+}
+let result = myFunc2("hello");
+
+- 여러개의 매개변수와 매개변수 기본 값 세팅
+- 기본값이 있으면 호출 시 안 쓰면 기본 값으로 넣음
+func printNum(a: Int, b: Int=10)
+{
+	print(a, ", ", b);
+}
+let result = myFunc3(a: 1, b: 5);	// 1, 5
+let result = myFunc3(a: 1);		// 1, 10
+
+- 매개변수 이름 생략 가능
+func printNum(_ a: Int, _ b: Int)
+{
+	print(a, ", ", b);
+}
+let result = myFunc3(1, 5);	// 1, 5
+
+- 매개변수로 배열 받기
+func getSize(arr: String...)
+{
+	for name in arr
+	{
+		print(name);
+	}
+}
+let result = myFunc2(arr: "hello", "world");
+
+
+* 클로저 (함수 포인터)
+코드 블럭을 변수로 만들어 인자로도 전달하고 실행도 가능
+- 선택적 수행, 비동기적 수행 가능
+- 통신, UI이벤트
+var sum: (Int, Int) -> Int =
+{
+	(a:Int. b:Int) -> Int in
+		return a + b;
+}
+var result = sum(10, 20)
+
+func calc(a: Int, b: Int, method: (Int, Int) -> Int ) -> Int
+{
+	return method(a, b);
+]
+var result = calc(a: 10, b: 20, method: sum)
